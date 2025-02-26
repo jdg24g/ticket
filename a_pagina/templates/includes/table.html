@@ -29,7 +29,7 @@
                     </th>
                     {% if item.mesa %}
                     <td class="px-3 py-4">
-                        {{ item.mesa }}
+                        MESA: {{ item.mesa }}
                     </td>
                     {% else %}
                     <td class="px-3 py-4">
@@ -40,9 +40,12 @@
                         Gs. {{ item.get_total|intcomma }}
                     </td>
                     <td class="px-3 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        <a href="{% url 'detalle_ticket' item.id %}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline me-2">
                             <i class="fa-solid fa-eye"></i>
                         </a>
+                        <button onclick="printTicket('{% url 'detalle_ticket' item.id %}')" class="font-medium text-green-600 dark:text-green-500 hover:underline">
+                            <i class="fa-solid fa-print"></i>
+                        </button>
                     </td>
                 </tr>
                 {% endfor %}
@@ -82,3 +85,19 @@
 </div>
 
 </div>
+
+<script>
+function printTicket(url) {
+    // Abre la URL en una nueva ventana
+    const printWindow = window.open(url, '_blank');
+    
+    // Cuando la ventana termine de cargar, imprime
+    printWindow.onload = function() {
+        printWindow.print();
+        // Espera un momento y luego cierra la ventana
+        setTimeout(function() {
+            printWindow.close();
+        }, 2000); // Espera 1 segundo antes de cerrar
+    };
+}
+</script>

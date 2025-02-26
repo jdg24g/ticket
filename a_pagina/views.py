@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
+from .models import ItemPedido, Ticket
 
 def index(request):
-    return render(request, 'index.html')
+    title = 'BIDMAX'
+    tickets = Ticket.objects.all().order_by('-fecha_creacion')  # Ordenado por fecha, más reciente primero
+    context = {
+        'title': title,
+        'items': tickets,  # Pasamos los tickets como items
+    }
+    return render(request, 'index.html', context)
 
 
     ticket = get_object_or_404(Ticket, pk=pk)

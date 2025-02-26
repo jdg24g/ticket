@@ -2,9 +2,9 @@ from django.db import models
 from django.utils import timezone
 
 tipo = [
-    ("1", "Delivery"),
-    ("2", "Mesa"),
-    ("3", "A recoger"),
+    ("Delivery", "Delivery"),
+    ("Mesa", "Mesa"),
+    ("Recoger", "Recoger"),
 ]
 
 class Producto(models.Model):
@@ -27,7 +27,7 @@ class Cliente(models.Model):
         return self.nombre
 
 class Ticket(models.Model):
-    tipo = models.CharField(max_length=1, choices=tipo,default=2)
+    tipo = models.CharField(max_length=100, choices=tipo,default=2)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True, blank=True)
     mesa = models.PositiveIntegerField(null=True, blank=True)
     fecha_creacion = models.DateTimeField(auto_now=True)
@@ -37,11 +37,16 @@ class Ticket(models.Model):
     def __str__(self):
         return f"Ticket {self.id} - {self.cliente.nombre}"
 
+    def get_total(self):
+        return sum(item.cantidad * item.producto.precio for item in self.itempedido_set.all())
+
 
 class ItemPedido(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
+    
+    
     
     def __str__(self):
         return f"{self.cantidad} x {self.producto.nombre}"

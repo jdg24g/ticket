@@ -1,21 +1,21 @@
 {% load humanize %}
-<div class="flex flex-1 m-2 justify-center items-center">
+<div class="m-2 container-sm">
     
 
-<div class="relative  shadow-md sm:rounded-lg p-4">
+<div class="relative  shadow-md sm:rounded-lg p-2 rounded-sm bg-white dark:bg-gray-800">
     <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>                
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-4 py-3">
                     Tipo
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-4 py-3">
                     Cliente
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-4 py-3">
                     Total
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-4 py-3">
                     Acción
                 </th>
             </tr>
@@ -24,22 +24,22 @@
             {% if items %}
                 {% for item in items %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <th scope="row" class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ item.tipo }}
                     </th>
                     {% if item.mesa %}
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-4">
                         MESA: {{ item.mesa }}
                     </td>
                     {% else %}
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-4">
                         {{ item.cliente }}
                     </td>
                     {% endif %}
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-4">
                         Gs. {{ item.get_total|intcomma }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-4">
                         <a href="{% url 'detalle_ticket' item.id %}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline me-2">
                             <i class="fa-solid fa-eye"></i>
                         </a>
